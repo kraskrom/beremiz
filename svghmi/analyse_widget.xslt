@@ -580,21 +580,21 @@
       <xsl:value-of select="@type"/>
     </type>
     <longdesc>
-      <xsl:text>Input widget takes one variable path, and displays current value in
+      <xsl:text>    Input widget takes one variable path, and displays current value in
 </xsl:text>
-      <xsl:text>optional "value" labeled sub-element. 
-</xsl:text>
-      <xsl:text>
-</xsl:text>
-      <xsl:text>Click on optional "edit" labeled element opens keypad to edit value.
+      <xsl:text>    optional "value" labeled sub-element. 
 </xsl:text>
       <xsl:text>
 </xsl:text>
-      <xsl:text>Operation on current value is performed when click on sub-elements with
+      <xsl:text>    Click on optional "edit" labeled element opens keypad to edit value.
 </xsl:text>
-      <xsl:text>label starting with '=', '+' or '-' sign. Value after sign is used as
+      <xsl:text>    
 </xsl:text>
-      <xsl:text>operand.
+      <xsl:text>    Operation on current value is performed when click on sub-elements with
+</xsl:text>
+      <xsl:text>    label starting with '=', '+' or '-' sign. Value after sign is used as
+</xsl:text>
+      <xsl:text>    operand.
 </xsl:text>
     </longdesc>
     <shortdesc>

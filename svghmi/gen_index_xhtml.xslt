@@ -4965,21 +4965,21 @@
       <xsl:value-of select="@type"/>
     </type>
     <longdesc>
-      <xsl:text>Input widget takes one variable path, and displays current value in
+      <xsl:text>    Input widget takes one variable path, and displays current value in
 </xsl:text>
-      <xsl:text>optional "value" labeled sub-element. 
-</xsl:text>
-      <xsl:text>
-</xsl:text>
-      <xsl:text>Click on optional "edit" labeled element opens keypad to edit value.
+      <xsl:text>    optional "value" labeled sub-element. 
 </xsl:text>
       <xsl:text>
 </xsl:text>
-      <xsl:text>Operation on current value is performed when click on sub-elements with
+      <xsl:text>    Click on optional "edit" labeled element opens keypad to edit value.
 </xsl:text>
-      <xsl:text>label starting with '=', '+' or '-' sign. Value after sign is used as
+      <xsl:text>    
 </xsl:text>
-      <xsl:text>operand.
+      <xsl:text>    Operation on current value is performed when click on sub-elements with
+</xsl:text>
+      <xsl:text>    label starting with '=', '+' or '-' sign. Value after sign is used as
+</xsl:text>
+      <xsl:text>    operand.
 </xsl:text>
     </longdesc>
     <shortdesc>
@@ -4997,65 +4997,95 @@
     <xsl:text>InputWidget</xsl:text>
     <xsl:text> extends Widget{
 </xsl:text>
-    <xsl:text>     on_op_click(opstr) {
+    <xsl:text>    set_inactive_visibility(index, value) {
 </xsl:text>
-    <xsl:text>         this.change_hmi_value(0, opstr);
+    <xsl:text>        if (this.action_elt_inactive[index])
 </xsl:text>
-    <xsl:text>     }
+    <xsl:text>            this.action_elt_inactive[index].style.visibility = value;
 </xsl:text>
-    <xsl:text>     edit_callback(new_val) {
-</xsl:text>
-    <xsl:text>         this.apply_hmi_value(0, new_val);
-</xsl:text>
-    <xsl:text>     }
+    <xsl:text>    }
 </xsl:text>
     <xsl:text>
 </xsl:text>
-    <xsl:text>     is_inhibited = false;
+    <xsl:text>    on_op_mouse_up() {
 </xsl:text>
-    <xsl:text>     alert(msg){
+    <xsl:text>        svg_root.removeEventListener("pointerup", this.bound_on_op_mouse_up[this.pressed_index], true);
 </xsl:text>
-    <xsl:text>         this.is_inhibited = true;
+    <xsl:text>        this.set_inactive_visibility(this.pressed_index, "visible");
 </xsl:text>
-    <xsl:text>         this.display = msg;
+    <xsl:text>        this.change_hmi_value(0, this.change_value);
 </xsl:text>
-    <xsl:text>         setTimeout(() =&gt; this.stopalert(), 1000);
-</xsl:text>
-    <xsl:text>         this.request_animate();
-</xsl:text>
-    <xsl:text>     }
+    <xsl:text>    }
 </xsl:text>
     <xsl:text>
 </xsl:text>
-    <xsl:text>     stopalert(){
+    <xsl:text>    on_op_mouse_down(index, cv){
 </xsl:text>
-    <xsl:text>         this.is_inhibited = false;
+    <xsl:text>        svg_root.addEventListener("pointerup", this.bound_on_op_mouse_up[index], true);
 </xsl:text>
-    <xsl:text>         this.display = this.last_value;
+    <xsl:text>        this.change_value = cv;
 </xsl:text>
-    <xsl:text>         this.request_animate();
+    <xsl:text>        this.pressed_index = index;
 </xsl:text>
-    <xsl:text>     }
+    <xsl:text>        this.set_inactive_visibility(index, "hidden");
 </xsl:text>
-    <xsl:text>
-</xsl:text>
-    <xsl:text>     overshot(new_val, max) {
-</xsl:text>
-    <xsl:text>         this.alert("max");
-</xsl:text>
-    <xsl:text>     }
+    <xsl:text>    }
 </xsl:text>
     <xsl:text>
 </xsl:text>
-    <xsl:text>     undershot(new_val, min) {
+    <xsl:text>    edit_callback(new_val) {
 </xsl:text>
-    <xsl:text>         this.alert("min");
+    <xsl:text>        this.apply_hmi_value(0, new_val);
 </xsl:text>
-    <xsl:text>     }
+    <xsl:text>    }
 </xsl:text>
     <xsl:text>
 </xsl:text>
-    <xsl:text>     display = "";
+    <xsl:text>    is_inhibited = false;
+</xsl:text>
+    <xsl:text>    alert(msg){
+</xsl:text>
+    <xsl:text>        this.is_inhibited = true;
+</xsl:text>
+    <xsl:text>        this.display = msg;
+</xsl:text>
+    <xsl:text>        setTimeout(() =&gt; this.stopalert(), 1000);
+</xsl:text>
+    <xsl:text>        this.request_animate();
+</xsl:text>
+    <xsl:text>    }
+</xsl:text>
+    <xsl:text>
+</xsl:text>
+    <xsl:text>    stopalert(){
+</xsl:text>
+    <xsl:text>        this.is_inhibited = false;
+</xsl:text>
+    <xsl:text>        this.display = this.last_value;
+</xsl:text>
+    <xsl:text>        this.request_animate();
+</xsl:text>
+    <xsl:text>    }
+</xsl:text>
+    <xsl:text>
+</xsl:text>
+    <xsl:text>    overshot(new_val, max) {
+</xsl:text>
+    <xsl:text>        this.alert("max");
+</xsl:text>
+    <xsl:text>    }
+</xsl:text>
+    <xsl:text>
+</xsl:text>
+    <xsl:text>    undershot(new_val, min) {
+</xsl:text>
+    <xsl:text>        this.alert("min");
+</xsl:text>
+    <xsl:text>    }
+</xsl:text>
+    <xsl:text>
+</xsl:text>
+    <xsl:text>    display = "";
 </xsl:text>
     <xsl:text>}
 </xsl:text>
@@ -5097,82 +5127,118 @@
     <xsl:value-of select="$edit_elt"/>
     <xsl:variable name="action_elements" select="$hmi_element/*[regexp:test(@inkscape:label,'^[=+\-].+')]"/>
     <xsl:if test="$have_value">
-      <xsl:text>    frequency: 5,
+      <xsl:text>      frequency: 5,
 </xsl:text>
     </xsl:if>
-    <xsl:text>    dispatch: function(value) {
+    <xsl:text>  dispatch: function(value) {
 </xsl:text>
     <xsl:if test="$have_value or $have_edit">
       <xsl:choose>
         <xsl:when test="count(arg) = 1">
-          <xsl:text>        this.last_value = vsprintf("</xsl:text>
+          <xsl:text>                  this.last_value = vsprintf("</xsl:text>
           <xsl:value-of select="arg[1]/@value"/>
           <xsl:text>", [value]);
 </xsl:text>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:text>        this.last_value = value;
+          <xsl:text>                  this.last_value = value;
 </xsl:text>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:text>        if(!this.is_inhibited){
+      <xsl:text>          if(!this.is_inhibited) {
 </xsl:text>
-      <xsl:text>            this.display = this.last_value;
+      <xsl:text>              this.display = this.last_value;
 </xsl:text>
       <xsl:if test="$have_value">
-        <xsl:text>            this.request_animate();
+        <xsl:text>                  this.request_animate();
 </xsl:text>
       </xsl:if>
-      <xsl:text>        }
+      <xsl:text>          }
 </xsl:text>
     </xsl:if>
-    <xsl:text>    },
+    <xsl:text>  },
 </xsl:text>
     <xsl:if test="$have_value">
-      <xsl:text>    animate: function(){
+      <xsl:text>      animate: function(){
 </xsl:text>
-      <xsl:text>        multiline_to_svg_text(this.value_elt, String(this.display));
+      <xsl:text>          multiline_to_svg_text(this.value_elt, String(this.display));
 </xsl:text>
-      <xsl:text>    },
+      <xsl:text>      },
 </xsl:text>
     </xsl:if>
-    <xsl:for-each select="$action_elements">
-      <xsl:text>    action_elt_</xsl:text>
-      <xsl:value-of select="position()"/>
-      <xsl:text>: id("</xsl:text>
-      <xsl:value-of select="@id"/>
-      <xsl:text>"),
+    <xsl:if test="count($action_elements) &gt; 0">
+      <xsl:text>      action_elt: [],
 </xsl:text>
-    </xsl:for-each>
-    <xsl:text>    init: function() {
+      <xsl:text>      action_elt_inactive: [],
+</xsl:text>
+      <xsl:text>      bound_on_op_mouse_up: [],
+</xsl:text>
+      <xsl:text>      pressed_index: -1,
+</xsl:text>
+      <xsl:text>      change_value: "0",
+</xsl:text>
+    </xsl:if>
+    <xsl:text>  init: function() {
 </xsl:text>
     <xsl:if test="$have_edit">
-      <xsl:text>        this.edit_elt.onclick = () =&gt; edit_value("</xsl:text>
+      <xsl:text>          this.edit_elt.onclick = () =&gt; edit_value("</xsl:text>
       <xsl:value-of select="path/@value"/>
       <xsl:text>", "</xsl:text>
       <xsl:value-of select="path/@type"/>
       <xsl:text>", this, this.last_value);
 </xsl:text>
       <xsl:if test="$have_value">
-        <xsl:text>        this.value_elt.style.pointerEvents = "none";
+        <xsl:text>              this.value_elt.style.pointerEvents = "none";
 </xsl:text>
       </xsl:if>
-      <xsl:text>        this.animate();
+      <xsl:text>          this.animate();
 </xsl:text>
     </xsl:if>
+    <let hasInactive="false"/>
     <xsl:for-each select="$action_elements">
-      <xsl:text>        this.action_elt_</xsl:text>
-      <xsl:value-of select="position()"/>
-      <xsl:text>.onclick = () =&gt; this.on_op_click("</xsl:text>
+      <xsl:variable name="pos" select="position() - 1"/>
+      <xsl:text>          this.action_elt.push(id("</xsl:text>
+      <xsl:value-of select="@id"/>
+      <xsl:text>"));
+</xsl:text>
+      <xsl:text>          this.action_elt[</xsl:text>
+      <xsl:value-of select="$pos"/>
+      <xsl:text>].onmousedown = () =&gt; this.on_op_mouse_down(</xsl:text>
+      <xsl:value-of select="$pos"/>
+      <xsl:text>, "</xsl:text>
       <xsl:value-of select="func:escape_quotes(@inkscape:label)"/>
       <xsl:text>");
 </xsl:text>
+      <xsl:text>          this.bound_on_op_mouse_up.push(this.on_op_mouse_up.bind(this));
+</xsl:text>
+      <xsl:text>          hasInactive = false;
+</xsl:text>
+      <xsl:text>          Array.prototype.slice.call(this.action_elt[</xsl:text>
+      <xsl:value-of select="$pos"/>
+      <xsl:text>].children).forEach((child) =&gt; {
+</xsl:text>
+      <xsl:text>              const attrMap = child.attributes;
+</xsl:text>
+      <xsl:text>              if (attrMap["inkscape:label"] &amp;&amp; attrMap.getNamedItem("inkscape:label").value == "inactive") {
+</xsl:text>
+      <xsl:text>                  this.action_elt_inactive.push(id(child.id));
+</xsl:text>
+      <xsl:text>                  hasInactive = true;
+</xsl:text>
+      <xsl:text>              }
+</xsl:text>
+      <xsl:text>          });
+</xsl:text>
+      <xsl:text>          if (!hasInactive)
+</xsl:text>
+      <xsl:text>              this.action_elt_inactive.push(null);
+</xsl:text>
     </xsl:for-each>
     <xsl:if test="$have_value">
-      <xsl:text>        multiline_to_svg_text(this.value_elt, "");
+      <xsl:text>          multiline_to_svg_text(this.value_elt, "");
 </xsl:text>
     </xsl:if>
-    <xsl:text>    },
+    <xsl:text>  },
 </xsl:text>
   </xsl:template>
   <xsl:template match="widget[@type='JsonTable']" mode="widget_desc">
