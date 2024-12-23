@@ -5117,10 +5117,10 @@
     <xsl:value-of select="$edit_elt"/>
     <xsl:variable name="action_elements" select="$hmi_element/*[regexp:test(@inkscape:label,'^[=+\-].+')]"/>
     <xsl:if test="$have_value">
-      <xsl:text>  frequency: 5,
+      <xsl:text>    frequency: 5,
 </xsl:text>
     </xsl:if>
-    <xsl:text>  dispatch: function(value) {
+    <xsl:text>    dispatch: function(value) {
 </xsl:text>
     <xsl:if test="$have_value or $have_edit">
       <xsl:choose>
@@ -5135,40 +5135,40 @@
 </xsl:text>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:text>      if(!this.is_inhibited) {
+      <xsl:text>      if (!this.is_inhibited) {
 </xsl:text>
-      <xsl:text>          this.display = this.last_value;
+      <xsl:text>        this.display = this.last_value;
 </xsl:text>
       <xsl:if test="$have_value">
-        <xsl:text>          this.request_animate();
+        <xsl:text>        this.request_animate();
 </xsl:text>
       </xsl:if>
       <xsl:text>      }
 </xsl:text>
     </xsl:if>
-    <xsl:text>  },
+    <xsl:text>    },
 </xsl:text>
     <xsl:if test="$have_value">
-      <xsl:text>  animate: function(){
+      <xsl:text>    animate: function(){
 </xsl:text>
       <xsl:text>      multiline_to_svg_text(this.value_elt, String(this.display));
 </xsl:text>
-      <xsl:text>  },
+      <xsl:text>    },
 </xsl:text>
     </xsl:if>
     <xsl:if test="count($action_elements) &gt; 0">
-      <xsl:text>  action_elt: [],
+      <xsl:text>    action_elt: [],
 </xsl:text>
-      <xsl:text>  activable_sub: [],
+      <xsl:text>    activable_sub: [],
 </xsl:text>
-      <xsl:text>  bound_on_op_mouse_up: [],
+      <xsl:text>    bound_on_op_mouse_up: [],
 </xsl:text>
-      <xsl:text>  pressed_index: -1,
+      <xsl:text>    pressed_index: -1,
 </xsl:text>
-      <xsl:text>  change_value: "0",
+      <xsl:text>    change_value: "0",
 </xsl:text>
     </xsl:if>
-    <xsl:text>  init: function() {
+    <xsl:text>    init: function() {
 </xsl:text>
     <xsl:if test="$have_edit">
       <xsl:text>      this.edit_elt.onclick = () =&gt; edit_value("</xsl:text>
@@ -5207,7 +5207,7 @@
       <xsl:text>      sub = {
 </xsl:text>
       <xsl:for-each select="$active">
-        <xsl:text>          </xsl:text>
+        <xsl:text>        </xsl:text>
         <xsl:value-of select="@inkscape:label"/>
         <xsl:text>_elt: id("</xsl:text>
         <xsl:value-of select="@id"/>
@@ -5227,7 +5227,7 @@
       <xsl:text>      multiline_to_svg_text(this.value_elt, "");
 </xsl:text>
     </xsl:if>
-    <xsl:text>  },
+    <xsl:text>    },
 </xsl:text>
   </xsl:template>
   <xsl:template match="widget[@type='JsonTable']" mode="widget_desc">

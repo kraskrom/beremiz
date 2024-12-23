@@ -78,9 +78,9 @@ widget_defs("Input") {
     const "action_elements", "$hmi_element/*[regexp:test(@inkscape:label,'^[=+\-].+')]";
 
     if "$have_value" {
-    |   frequency: 5,
+    |     frequency: 5,
     }
-    |   dispatch: function(value) {
+    |     dispatch: function(value) {
     if "$have_value or $have_edit" {
         choose {
             when "count(arg) = 1" {
@@ -90,30 +90,30 @@ widget_defs("Input") {
     |       this.last_value = value;
             }
         }
-    |       if(!this.is_inhibited) {
-    |           this.display = this.last_value;
+    |       if (!this.is_inhibited) {
+    |         this.display = this.last_value;
         if "$have_value" {
-    |           this.request_animate();
+    |         this.request_animate();
         }
     |       }
     }
-    |   },
+    |     },
 
     if "$have_value" {
-    |   animate: function(){
+    |     animate: function(){
     |       multiline_to_svg_text(this.value_elt, String(this.display));
-    |   },
+    |     },
     }
 
     if "count($action_elements) > 0" {
-    |   action_elt: [],
-    |   activable_sub: [],
-    |   bound_on_op_mouse_up: [],
-    |   pressed_index: -1,
-    |   change_value: "0",
+    |     action_elt: [],
+    |     activable_sub: [],
+    |     bound_on_op_mouse_up: [],
+    |     pressed_index: -1,
+    |     change_value: "0",
     }
 
-    |   init: function() {
+    |     init: function() {
     if "$have_edit" {
     |       this.edit_elt.onclick = () => edit_value("«path/@value»", "«path/@type»", this, this.last_value);
         if "$have_value" {
@@ -133,7 +133,7 @@ widget_defs("Input") {
     |       this.bound_on_op_mouse_up.push(this.on_op_mouse_up.bind(this));
     |       sub = {
         foreach "$active" {
-    |           «@inkscape:label»_elt: id("«@id»")`if "position()!=last()" > ,`
+    |         «@inkscape:label»_elt: id("«@id»")`if "position()!=last()" > ,`
         }
     |       };
     |       this.activable_sub.push(sub);
@@ -142,5 +142,5 @@ widget_defs("Input") {
     if "$have_value" {
     |       multiline_to_svg_text(this.value_elt, "");
     }
-    |   },
+    |     },
 }
